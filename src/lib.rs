@@ -1,6 +1,6 @@
 use std::str::FromStr;
 
-use service_invoker::{ServiceResult, Client, ServiceRequest, Method, HeaderMap, HeaderValue, AUTHORIZATION};
+use service_invoker::{ServiceResult, Client, ServiceRequest, Method, HeaderValue, AUTHORIZATION};
 use url::Url;
 use web::{request::{AuthenticateRequest, VerifyJwtRequest, SetPasswordRequest}, response::{AuthenticateResponse, VerifyJwtResponse}};
 
@@ -28,13 +28,10 @@ pub struct AuthService<'a> {
 impl<'a> AuthService<'a> {
     pub async fn authenticate(&self, request: AuthenticateRequest) -> ServiceResult<AuthenticateResponse> {
         let route = Url::from_str(&format!("{}{}", self.base_url, "/authenticate")).unwrap();
-        let mut headers = HeaderMap::new();
-
-        headers.append(AUTHORIZATION, self.token_header.clone());
 
         ServiceRequest::builder()
             .with_url(route)
-            .with_headers(headers)
+            .with_header(AUTHORIZATION, self.token_header.clone())
             .with_method(Method::POST)
             .with_body(request)
             .build()
@@ -44,13 +41,10 @@ impl<'a> AuthService<'a> {
 
     pub async fn verify_jwt(&self, request: VerifyJwtRequest) -> ServiceResult<VerifyJwtResponse> {
         let route = Url::from_str(&format!("{}{}", self.base_url, "/verify_jwt")).unwrap();
-        let mut headers = HeaderMap::new();
-
-        headers.append(AUTHORIZATION, self.token_header.clone());
 
         ServiceRequest::builder()
             .with_url(route)
-            .with_headers(headers)
+            .with_header(AUTHORIZATION, self.token_header.clone())
             .with_method(Method::POST)
             .with_body(request)
             .build()
@@ -60,13 +54,10 @@ impl<'a> AuthService<'a> {
 
     pub async fn set_password(&self, request: SetPasswordRequest) -> ServiceResult<()> {
         let route = Url::from_str(&format!("{}{}", self.base_url, "/set_password")).unwrap();
-        let mut headers = HeaderMap::new();
-
-        headers.append(AUTHORIZATION, self.token_header.clone());
 
         ServiceRequest::builder()
             .with_url(route)
-            .with_headers(headers)
+            .with_header(AUTHORIZATION, self.token_header.clone())
             .with_method(Method::POST)
             .with_body(request)
             .build()
@@ -78,7 +69,7 @@ impl<'a> AuthService<'a> {
 impl<'a> From<&AuthServiceConfig> for AuthService<'a> {
     fn from(value: &AuthServiceConfig) -> Self {
         let token_header = HeaderValue::from_str(&format!("TOKEN {}", &value.token)).unwrap();
-        
+
         Self {
             client: Client::default(),
             base_url: value.base_url.to_string(),
