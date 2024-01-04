@@ -1,3 +1,4 @@
+use serde::Deserialize;
 use service_invoker::{ServiceResult, Client, ServiceRequest, Method, AUTHORIZATION};
 use url::Url;
 use web::{request::{AuthenticateRequest, VerifyJwtRequest, SetPasswordRequest}, response::{AuthenticateResponse, VerifyJwtResponse}};
@@ -12,8 +13,9 @@ mod data_stores;
 mod web;
 mod users;
 
+#[derive(Deserialize)]
 pub struct AuthServiceConfig {
-    pub base_url: Url,
+    pub base_url: String,
     pub token: String,
 }
 
@@ -65,7 +67,7 @@ impl<'a> From<&AuthServiceConfig> for AuthService<'a> {
     fn from(value: &AuthServiceConfig) -> Self {
         Self {
             client: Client::default(),
-            base_url: value.base_url.clone(),
+            base_url: Url::parse(&value.base_url).expect("Invalid authentication host configured"),
             token_header: format!("TOKEN {}", &value.token),
         }
     }
