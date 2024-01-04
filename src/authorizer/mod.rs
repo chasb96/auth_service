@@ -5,6 +5,6 @@ pub mod password;
 
 pub use token::TokenAuthorizer;
 
-trait Authorizer {
+pub trait Authorizer {
     async fn verify<'a>(&self, token: &'a str) -> bool;
 }
