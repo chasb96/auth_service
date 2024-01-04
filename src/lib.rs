@@ -1,7 +1,6 @@
 use serde::Deserialize;
 use service_invoker::{ServiceResult, Client, ServiceRequest, Method, AUTHORIZATION};
 use url::Url;
-use web::{request::{AuthenticateRequest, VerifyJwtRequest, SetPasswordRequest}, response::{AuthenticateResponse, VerifyJwtResponse}};
 
 mod axum;
 mod configuration;
@@ -12,6 +11,8 @@ mod authorizer;
 mod data_stores;
 mod web;
 mod users;
+
+pub use web::{request::{AuthenticateRequest, VerifyJwtRequest, SetPasswordRequest}, response::{AuthenticateResponse, VerifyJwtResponse}};
 
 #[derive(Deserialize)]
 pub struct AuthServiceConfig {
