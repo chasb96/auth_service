@@ -1,16 +1,6 @@
 use tokio::net::TcpListener;
-use util::log_unwrap::LogUnwrap;
+use auth_service::{util::log_unwrap::LogUnwrap, routes};
 use ::axum::{serve, Router};
-
-mod axum;
-mod configuration;
-mod routes;
-mod util;
-
-mod authorizer;
-mod data_stores;
-mod web;
-mod users;
 
 #[tokio::main]
 async fn main() {

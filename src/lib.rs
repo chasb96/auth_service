@@ -4,8 +4,8 @@ use url::Url;
 
 mod axum;
 mod configuration;
-mod routes;
-mod util;
+pub mod routes;
+pub mod util;
 
 mod authorizer;
 mod data_stores;

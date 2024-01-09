@@ -3,14 +3,6 @@ name = "auth_service"
 version = "0.1.0"
 edition = "2021"
 
-[lib]
-name = "auth_service_lib"
-path = "src/lib.rs"
-
-[[bin]]
-name = "auth_service_host"
-path = "src/main.rs"
-
 [dependencies]
 axum = { version = "0.7.3", features = ["macros", "multipart"] }
 tokio = { version = "1.35.1", features = ["full"] }
