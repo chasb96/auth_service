@@ -11,6 +11,7 @@ mod authorizer;
 mod data_stores;
 mod web;
 mod users;
+mod health;
 
 pub use web::{request::{AuthenticateRequest, VerifyJwtRequest, SetPasswordRequest}, response::{AuthenticateResponse, VerifyJwtResponse}};
 
