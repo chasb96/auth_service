@@ -1,17 +1,15 @@
+use std::ops::Deref;
 use async_trait::async_trait;
 use axum::{extract::FromRequestParts, http::{StatusCode, request::Parts}};
-
-use crate::{data_stores::postgres::PostgresDatabase, users::{UserStore, User, GetUserError, SetPasswordError}};
+use crate::data_stores::postgres::PostgresDatabase;
 
 pub struct UserStoreExtractor(PostgresDatabase);
 
-impl UserStore for UserStoreExtractor {
-    async fn get_by_username(&self, username: &str) -> Result<Option<User>, GetUserError> {
-        self.0.get_by_username(username).await
-    }
+impl Deref for UserStoreExtractor {
+    type Target = PostgresDatabase;
 
-    async fn set_password_hash(&self, id: i32, password: &str) -> Result<(), SetPasswordError> {
-        self.0.set_password_hash(id, password).await
+    fn deref(&self) -> &Self::Target {
+        &self.0
     }
 }
 
