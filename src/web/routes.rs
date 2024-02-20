@@ -1,5 +1,5 @@
 use axum::{http::StatusCode, Json};
-use crate::{axum::extractors::{UserStoreExtractor, AuthorizerExtractor}, users::{UserStore, ClaimsUser}, util::or_status_code::{OrInternalServerError, OrBadRequest}, authorizer::password::{verify_password, generate_password_hash}, authorizer::jwt};
+use crate::{authorizer::{jwt, password::{generate_password_hash, verify_password}}, axum::extractors::{AuthorizerExtractor, UserStoreExtractor}, users::{claims_user::ClaimsUser, UserStore}, util::or_status_code::{OrBadRequest, OrInternalServerError}};
 use super::{request::{AuthenticateRequest, SetPasswordRequest, VerifyJwtRequest}, response::{AuthenticateResponse, VerifyJwtResponse}};
 
 pub async fn authenticate(

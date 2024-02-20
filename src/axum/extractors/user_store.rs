@@ -1,12 +1,12 @@
 use std::ops::Deref;
 use async_trait::async_trait;
 use axum::{extract::FromRequestParts, http::{StatusCode, request::Parts}};
-use crate::data_stores::postgres::PostgresDatabase;
+use crate::users::UserStoreOption;
 
-pub struct UserStoreExtractor(PostgresDatabase);
+pub struct UserStoreExtractor(UserStoreOption);
 
 impl Deref for UserStoreExtractor {
-    type Target = PostgresDatabase;
+    type Target = UserStoreOption;
 
     fn deref(&self) -> &Self::Target {
         &self.0

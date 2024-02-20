@@ -1,7 +1,12 @@
 use std::{error::Error, fmt::Display};
 use jwt::Claims;
 use serde_json::Value;
-use super::{User, ClaimsUser};
+use super::User;
+
+pub struct ClaimsUser {
+    pub id: i32,
+    pub username: String,
+}
 
 #[derive(Debug)]
 pub enum UserClaimError {
